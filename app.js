@@ -2,7 +2,11 @@ const express = require("express");
 
 const morgan = require("morgan");
 
+const AppError = require("./utils/AppError");
+
 const menuRouter = require("./Routes/menuRoute");
+
+const globalErrorHandler = require("./Controller/errorConroller");
 
 const app = express();
 app.use(express.json());
@@ -22,5 +26,13 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/menu", menuRouter);
+
+//if no route is found
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+//making error handling middleware which can be used anywhere in the app
+app.use(globalErrorHandler);
 
 module.exports = app;
