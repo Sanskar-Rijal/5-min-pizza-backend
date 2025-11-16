@@ -30,3 +30,23 @@ exports.getOrderById = catchAsync(async (req, res, next) => {
     data: order,
   });
 });
+
+//user can make order priority even if the order was made
+exports.updateOrderPriority = catchAsync(async (req, res, next) => {
+  // const updateOrder = await Order.findOneAndUpdate(
+  //   { orderId: req.params.id },
+  //   { priority: req.body.priority },
+  //   { new: true }
+  // );
+  const updateOrder = await Order.findOne({ orderId: req.params.id });
+  await updateOrder.setPriorityPrice(req.body.priority);
+
+  if (!updateOrder) {
+    return next(new AppError("No order found with that ID", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: updateOrder,
+  });
+});

@@ -8,6 +8,9 @@ const orderController = require("../Controller/orderController");
 router.route("/").post(orderController.createOrder);
 
 //find order by id
-router.route("/:id").get(orderController.getOrderById);
+router
+  .route("/:id")
+  .get(orderController.getOrderById)
+  .patch(orderController.updateOrderPriority);
 
 module.exports = router;

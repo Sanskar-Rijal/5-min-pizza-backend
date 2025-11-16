@@ -107,6 +107,11 @@ orderSchema.pre("save", function (next) {
   next();
 });
 
+//creating instance method, so when user set priority to true we can update price too
+orderSchema.methods.setPriorityPrice = async function (priority) {
+  this.priority = priority;
+  await this.save(); //since it's being saved so above middle ware will be called to calculate price
+};
 //middleware to generate unique tracking id for each order
 orderSchema.pre("save", async function (next) {
   if (this.isNew) {
