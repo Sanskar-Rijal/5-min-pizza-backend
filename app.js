@@ -6,6 +6,8 @@ const AppError = require("./utils/AppError");
 
 const menuRouter = require("./Routes/menuRoute");
 
+const orderRouter = require("./Routes/orderRoutes");
+
 const globalErrorHandler = require("./Controller/errorConroller");
 
 const app = express();
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/menu", menuRouter);
+app.use("/api/v1/order", orderRouter);
 
 //if no route is found
 app.all("*", (req, res, next) => {

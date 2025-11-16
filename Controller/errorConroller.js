@@ -74,6 +74,8 @@ const globalErrorHandler = (err, req, res, next) => {
     if (error.name === "ValidationError") {
       error = handleValidationErrorDB(error);
     }
+
+    sendErrorProd(error, res);
   }
 };
 
