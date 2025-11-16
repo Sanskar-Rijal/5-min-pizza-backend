@@ -30,6 +30,12 @@ app.use((req, res, next) => {
 app.use("/api/v1/menu", menuRouter);
 app.use("/api/v1/order", orderRouter);
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to Pizza Delivery App Backend",
+  });
+});
+
 //if no route is found
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
